@@ -3,6 +3,7 @@ from getpass import getpass
 from service.user_service import UserService
 from service.news_service import NewsService
 from service.role_service import RoleService
+from service.type_service import TypeService
 import os
 import sys
 import time
@@ -10,6 +11,7 @@ import time
 __user_service = UserService()
 __news_service = NewsService()
 __role_service = RoleService()
+__type_service = TypeService()
 
 while True:  # 轮询操作
     os.system('clear')  # 如果是window系统，使用cls
@@ -31,7 +33,31 @@ while True:  # 轮询操作
             while True:
                 os.system('clear')
                 if role == '新闻编辑':
-                    print('新闻编辑操作页面')
+                    print(Fore.LIGHTGREEN_EX, '\n\t1.发表新闻')
+                    print(Fore.LIGHTGREEN_EX, '\n\t2.编辑新闻')
+                    print(Fore.LIGHTRED_EX, '\n\tback.退出登录')
+                    print(Fore.LIGHTRED_EX, '\n\texit.退出系统')
+                    print(Style.RESET_ALL)
+                    opt = input("\n\t请输入操作编号: ")
+                    if opt == '1':
+                        os.system("clear")
+                        title = input('\n\t新闻标题:')
+                        userid = __user_service.search_userid(username)
+                        result = __type_service.search_list()
+                        for index in range(len(result)):
+                            item = result[index]
+                            print(Fore.LIGHTBLUE_EX, '\n\t%d.%s' % (index + 1, item[1]))
+                        print(Style.RESET_ALL)
+                        opt = input('\n\t类型编号:')
+                        type_id = result[int(opt) - 1][0]
+                        content_id = 100  # todo 新闻正文内容
+                        is_top = input("\n\t置顶级别(0-5):")
+                        is_commite = input("\n\t是否提交(Y/N):")
+                        if is_commite == 'Y' or is_commite == 'y':
+                            __news_service.insert(title, userid, type_id, content_id, is_top)
+                            print('\n\t保存成功(3秒自动返回)')
+                            time.sleep(3)
+
                 elif role == '管理员':
                     print(Fore.LIGHTGREEN_EX, '\n\t1.新闻管理')
                     print(Fore.LIGHTGREEN_EX, '\n\t2.用户管理')
