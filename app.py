@@ -136,6 +136,7 @@ while True:  # 轮询操作
                                     elif 1 <= int(opt) <= 10:
                                         news_id = result[int(opt) - 1][0]
                                         __news_service.delete_by_id(news_id)
+                                        __news_service.delete_cache(news_id)
                             elif opt == 'back':
                                 break
                     elif opt == '2':

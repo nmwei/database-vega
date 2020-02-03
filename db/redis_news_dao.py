@@ -22,3 +22,14 @@ class RedisNewsDao:
             print(e)
         finally:
             del con
+
+    def delete_cache(self, id):
+        con = redis.Redis(
+            connection_pool=pool
+        )
+        try:
+            con.delete(id)
+        except Exception as e:
+            print(e)
+        finally:
+            del con

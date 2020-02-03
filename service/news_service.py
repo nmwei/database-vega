@@ -41,3 +41,7 @@ class NewsService:
     # 向Redis保存缓存的新闻
     def cache_news(self, id, title, username, type, content, is_top, create_time):
         self.__redis_news_dao.insert(id, title, username, type, content, is_top, create_time)
+
+    # 删除缓存的新闻
+    def delete_cache(self, id):
+        self.__redis_news_dao.delete_cache(id)
