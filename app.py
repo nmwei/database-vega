@@ -57,7 +57,6 @@ while True:  # 轮询操作
                             __news_service.insert(title, userid, type_id, content_id, is_top)
                             print('\n\t保存成功(3秒自动返回)')
                             time.sleep(3)
-
                 elif role == '管理员':
                     print(Fore.LIGHTGREEN_EX, '\n\t1.新闻管理')
                     print(Fore.LIGHTGREEN_EX, '\n\t2.用户管理')
@@ -99,6 +98,18 @@ while True:  # 轮询操作
                                     elif 1 <= int(opt) <= 10:
                                         news_id = result[int(opt) - 1][0]
                                         __news_service.update_unreview_news(news_id)
+                                        result = __news_service.search_cache(news_id)
+                                        title = result[0]
+                                        username = result[1]
+                                        type = result[2]
+                                        content_id = result[3]
+                                        # todo 查找新闻正文
+                                        content = '100'
+                                        is_top = result[4]
+                                        create_time = str(result[5])
+                                        __news_service.cache_news(news_id, title, username, type,
+                                                                  content, is_top, create_time)
+
                             elif opt == '2':
                                 page = 1
                                 while True:

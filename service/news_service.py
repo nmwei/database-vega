@@ -1,8 +1,10 @@
 from db.news_dao import NewsDao
+from db.redis_news_dao import RedisNewsDao
 
 
 class NewsService:
     __news_dao=NewsDao()
+    __redis_news_dao=RedisNewsDao()
 
     # 查询审批新闻列表
     def search_unreview_list(self, page):
@@ -31,3 +33,11 @@ class NewsService:
     # 添加新闻
     def insert(self, title, editor_id, type_id, content_id, is_top):
         self.__news_dao.insert(title, editor_id, type_id, content_id, is_top)
+
+    # 查找用户缓存的记录
+    def search_cache(self, id):
+        return self.__news_dao.search_cache(id)
+
+    # 向Redis保存缓存的新闻
+    def cache_news(self, id, title, username, type, content, is_top, create_time):
+        self.__redis_news_dao.insert(id, title, username, type, content, is_top, create_time)
