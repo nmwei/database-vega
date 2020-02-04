@@ -45,3 +45,12 @@ class NewsService:
     # 删除缓存的新闻
     def delete_cache(self, id):
         self.__redis_news_dao.delete_cache(id)
+
+    # 根据id查找新闻
+    def search_by_id(self, id):
+        return self.__news_dao.search_by_id(id)
+
+    # 更改新闻
+    def update(self, id, title, type_id, content_id, is_top):
+        self.__news_dao.update(id, title, type_id, content_id, is_top)
+        self.delete_cache(id)
