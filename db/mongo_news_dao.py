@@ -37,3 +37,10 @@ class MongoNewsDao:
             return news['content']
         except Exception as e:
             print(e)
+
+    # 删除新闻
+    def delete_by_id(self, id):
+        try:
+            client.school.news.delete_one({'_id': ObjectId(id)})
+        except Exception as e:
+            print(e)

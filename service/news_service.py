@@ -29,7 +29,9 @@ class NewsService:
 
     # 删除新闻
     def delete_by_id(self, id):
-        return self.__news_dao.delete_by_id(id)
+        content_id = self.__news_dao.search_content_id(id)
+        self.__news_dao.delete_by_id(id)
+        self.__mongo_news_dao.delete_by_id(content_id)
 
     # 添加新闻
     def insert(self, title, editor_id, type_id, content, is_top):
