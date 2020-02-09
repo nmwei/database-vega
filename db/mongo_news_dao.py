@@ -29,3 +29,11 @@ class MongoNewsDao:
             })
         except Exception as e:
             print(e)
+
+    # 查找新闻正文
+    def search_content_by_id(self, id):
+        try:
+            news = client.school.news.find_one({'_id': ObjectId(id)})
+            return news['content']
+        except Exception as e:
+            print(e)

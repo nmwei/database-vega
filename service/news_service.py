@@ -59,3 +59,7 @@ class NewsService:
         self.__mongo_news_dao.update(content_id, title, content)
         self.__news_dao.update(id, title, type_id, content_id, is_top)
         self.delete_cache(id)
+
+    # 查找新闻正文
+    def search_content_by_id(self, id):
+        return self.__mongo_news_dao.search_content_by_id(id)
